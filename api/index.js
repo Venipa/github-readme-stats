@@ -73,7 +73,7 @@ module.exports = async (req, res) => {
         icon_color,
         text_color,
         bg_color,
-        theme,
+        theme: theme || 'midnight-purple', // default theme
         custom_title,
         border_radius,
         locale: locale ? locale.toLowerCase() : null,
