@@ -29,7 +29,7 @@ const renderRepoCard = (repo, options = {}) => {
     text_color,
     bg_color,
     show_owner,
-    theme = "default_repocard",
+    theme = "midnight-purple",
     border_radius,
     locale,
   } = options;

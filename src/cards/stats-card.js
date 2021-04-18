@@ -67,7 +67,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     icon_color,
     text_color,
     bg_color,
-    theme = "default",
+    theme = "midnight-purple",
     custom_title,
     border_radius,
     locale,
