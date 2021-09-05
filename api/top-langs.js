@@ -8,7 +8,7 @@ const {
 } = require("../src/common/utils");
 const fetchTopLanguages = require("../src/fetchers/top-languages-fetcher");
 const renderTopLanguages = require("../src/cards/top-languages-card");
-const blacklist = require("../src/common/blacklist");
+const whitelist = require("../src/common/whitelist");
 const { isLocaleAvailable } = require("../src/translations");
 
 module.exports = async (req, res) => {
@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  if (blacklist.includes(username)) {
+  if (!whitelist.find(x => x instanceof RegExp ? x.test(username) : x == username)) {
     return res.send(renderError("Something went wrong"));
   }
 

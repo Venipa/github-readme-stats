@@ -7,7 +7,7 @@ const {
 } = require("../src/common/utils");
 const fetchRepo = require("../src/fetchers/repo-fetcher");
 const renderRepoCard = require("../src/cards/repo-card");
-const blacklist = require("../src/common/blacklist");
+const whitelist = require("../src/common/whitelist");
 const { isLocaleAvailable } = require("../src/translations");
 
 module.exports = async (req, res) => {
@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  if (blacklist.includes(username)) {
+  if (!whitelist.find(x => x instanceof RegExp ? x.test(username) : x == username)) {
     return res.send(renderError("Something went wrong"));
   }
 
