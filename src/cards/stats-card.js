@@ -5,7 +5,7 @@ const { getStyles } = require("../getStyles");
 const { statCardLocales } = require("../translations");
 const {
   kFormatter,
-  FlexLayout,
+  flexLayout,
   clampValue,
   measureText,
   getCardColors,
@@ -70,6 +70,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     theme = "midnight-purple",
     custom_title,
     border_radius,
+    border_color,
     locale,
     disable_animations = false,
   } = options;
@@ -77,13 +78,15 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   const lheight = parseInt(line_height, 10);
 
   // returns theme based colors with proper overrides and defaults
-  const { titleColor, textColor, iconColor, bgColor } = getCardColors({
-    title_color,
-    icon_color,
-    text_color,
-    bg_color,
-    theme,
-  });
+  const { titleColor, textColor, iconColor, bgColor, borderColor } =
+    getCardColors({
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      border_color,
+      theme,
+    });
 
   const apostrophe = ["x", "s"].includes(name.slice(-1).toLocaleLowerCase())
     ? ""
@@ -129,7 +132,19 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     },
   };
 
-  const longLocales = ["cn", "es", "fr", "pt-br", "ru", "uk-ua", "id", "my", "pl"];
+  const longLocales = [
+    "cn",
+    "es",
+    "fr",
+    "pt-br",
+    "ru",
+    "uk-ua",
+    "id",
+    "my",
+    "pl",
+    "de",
+    "nl",
+  ];
   const isLongLocale = longLocales.includes(locale) === true;
 
   // filter out hidden stats defined by user & create the text nodes
@@ -142,7 +157,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
         index,
         showIcons: show_icons,
         shiftValuePos:
-          (!include_all_commits ? 50 : 20) + (isLongLocale ? 50 : 0),
+          (!include_all_commits ? 50 : 35) + (isLongLocale ? 50 : 0),
       }),
     );
 
@@ -207,6 +222,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
       textColor,
       iconColor,
       bgColor,
+      borderColor,
     },
   });
 
@@ -220,7 +236,7 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     ${rankCircle}
 
     <svg x="0" y="0">
-      ${FlexLayout({
+      ${flexLayout({
         items: statItems,
         gap: lheight,
         direction: "column",
