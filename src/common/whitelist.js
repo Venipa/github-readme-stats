@@ -1,3 +1,3 @@
 const whitelist = [/venipa/i];
 
-module.exports = whitelist;
+export default whitelist;

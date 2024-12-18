@@ -6,6 +6,7 @@ import {
   parseBoolean,
   renderError,
 } from "../src/common/utils.js";
+import whitelist from "../src/common/whitelist.js";
 import { fetchWakatimeStats } from "../src/fetchers/wakatime-fetcher.js";
 import { isLocaleAvailable } from "../src/translations.js";
 
@@ -36,6 +37,15 @@ export default async (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
+  if (!whitelist.find(x => x instanceof RegExp ? x.test(username) : x == username))
+    return res.send(renderError("Something went wrong", "This username is blacklisted", {
+      title_color,
+      text_color,
+      bg_color,
+      border_color,
+      theme,
+    }))
+
   if (locale && !isLocaleAvailable(locale)) {
     return res.send(
       renderError("Something went wrong", "Language not found", {
@@ -62,8 +72,7 @@ export default async (req, res) => {
 
     res.setHeader(
       "Cache-Control",
-      `max-age=${
-        cacheSeconds / 2
+      `max-age=${cacheSeconds / 2
       }, s-maxage=${cacheSeconds}, stale-while-revalidate=${CONSTANTS.ONE_DAY}`,
     );
 
@@ -92,8 +101,7 @@ export default async (req, res) => {
   } catch (err) {
     res.setHeader(
       "Cache-Control",
-      `max-age=${CONSTANTS.ERROR_CACHE_SECONDS / 2}, s-maxage=${
-        CONSTANTS.ERROR_CACHE_SECONDS
+      `max-age=${CONSTANTS.ERROR_CACHE_SECONDS / 2}, s-maxage=${CONSTANTS.ERROR_CACHE_SECONDS
       }, stale-while-revalidate=${CONSTANTS.ONE_DAY}`,
     ); // Use lower cache period for errors.
     return res.send(

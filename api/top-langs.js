@@ -5,6 +5,7 @@ import {
   parseBoolean,
   renderError,
 } from "../src/common/utils.js";
+import whitelist from "../src/common/whitelist.js";
 import { fetchTopLanguages } from "../src/fetchers/top-languages-fetcher.js";
 import { isLocaleAvailable } from "../src/translations.js";
 

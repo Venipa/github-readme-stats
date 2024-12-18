@@ -6,6 +6,7 @@ import {
   parseBoolean,
   renderError,
 } from "../src/common/utils.js";
+import whitelist from "../src/common/whitelist.js";
 import { fetchStats } from "../src/fetchers/stats-fetcher.js";
 import { isLocaleAvailable } from "../src/translations.js";
 
